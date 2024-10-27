@@ -1,0 +1,11 @@
+// Using the REST Client extension in VS Code to test the API
+// add http to the url below if there is an error when sending request
+POST http://localhost:8080/events
+content-type: application/json
+
+{
+  "title": "Test Event",
+  "description": "This is a test event",
+  "location": "Test Location",
+  "dateTime": "2025-12-31T23:59:59Z"
+}

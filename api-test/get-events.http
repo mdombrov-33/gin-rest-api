@@ -1,0 +1,3 @@
+// Using the REST Client extension in VS Code to test the API
+// add http to the url below if there is an error when sending request
+GET http://localhost:8080/events

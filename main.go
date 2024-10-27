@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+
 	"github.com/mdombrov-33/ginrestapi/models"
 )
 
@@ -44,6 +45,9 @@ func createEvent(context *gin.Context) {
 
 	event.ID = 1
 	event.UserID = 1
+
+	event.Save()
+
 	context.JSON(http.StatusCreated, gin.H{"message": "Event Created!", "event": event})
 
 }
