@@ -44,7 +44,6 @@ func getEvent(context *gin.Context) {
 }
 
 func createEvent(context *gin.Context) {
-
 	// Create a new event
 	var event models.Event
 
@@ -87,10 +86,18 @@ func updateEvent(context *gin.Context) {
 		return
 	}
 
+	userId := context.GetInt64("userId")
+
 	// Check if the event exists
-	_, err = models.GetEventById(eventId)
+	event, err := models.GetEventById(eventId)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not get an event"})
+		return
+	}
+
+	// User can only update their own events
+	if event.UserID != userId {
+		context.JSON(http.StatusUnauthorized, gin.H{"message": "You are not allowed to update this event"})
 		return
 	}
 
@@ -124,11 +131,20 @@ func deleteEvent(context *gin.Context) {
 		return
 	}
 
+	// Get the userId from the Gin context
+	userId := context.GetInt64("userId")
+
 	// Get the event by ID
 	event, err := models.GetEventById(eventId)
 
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not get an event"})
+		return
+	}
+
+	// User can only delete their own events
+	if event.UserID != userId {
+		context.JSON(http.StatusUnauthorized, gin.H{"message": "You are not allowed to delete this event"})
 		return
 	}
 

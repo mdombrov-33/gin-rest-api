@@ -1,10 +1,11 @@
 // Using the REST Client extension in VS Code to test the API
 // Should work without http:// part. Add it if there is an error when sending request
-PUT http://localhost:8080/events/1
+PUT http://localhost:8080/events/2
 content-type: application/json
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIyQGdtYWlsLmNvbSIsImV4cCI6MTczMDE1NDc3MCwidXNlcklkIjoyfQ.aUAAFWn-4m2t_5yP2Hf4llKeOrxiDU94K4PvRHDOJEw
 
 {
-    "title": "Updated Event123",
+    "title": "Updated Event for user2",
     "description": "Updated Description",
     "location": "Updated Location",
     "dateTime": "2065-12-31T23:59:59Z"

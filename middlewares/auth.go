@@ -13,15 +13,14 @@ func Authenticate(context *gin.Context) {
 
 	// Check if on empty token if client did not send a token
 	if token == "" {
-		// Abort current request to make sure that all other handlers after that are not executed
-		// Basically make sure that if something goes wrong we don't continue with the request
+		// Abort current request, basically make sure that if something goes wrong we don't continue with the request
 		context.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "Token is required"})
 	}
 
 	// Check if the token is valid
 	userId, err := utils.VerifyToken(token)
 
-	// If the token is not valid, return an error
+	// Abort the request if the token is not valid, basically make sure that if something goes wrong we don't continue with the request
 	if err != nil {
 		context.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "Token is not valid"})
 		return

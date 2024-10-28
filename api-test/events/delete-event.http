@@ -1,6 +1,6 @@
 // Using the REST Client extension in VS Code to test the API
 // Should work without http:// part. Add it if there is an error when sending request
-DELETE  http://localhost:8080/events/6
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIyQGdtYWlsLmNvbSIsImV4cCI6MTczMDE1Mjc2NCwidXNlcklkIjoyfQ.1TfNe1fqrMA4WtTeh-o94awIpUIrhZCnwMNHStt0jEc
+DELETE  http://localhost:8080/events/2
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIyQGdtYWlsLmNvbSIsImV4cCI6MTczMDE1NTE5NSwidXNlcklkIjoyfQ.X77iPCokx1MytKp6dkR9ka701JIKcEJm9AtOWsQUmMo
 
 
