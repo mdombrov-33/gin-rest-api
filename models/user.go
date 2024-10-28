@@ -48,13 +48,13 @@ func (u User) Save() error {
 }
 
 func (u User) ValidateCredentials() error {
-	query := "SELECT password FROM users WHERE email = ?"
+	query := "SELECT id, password FROM users WHERE email = ?"
 
 	// QueryRow returns a single row from the database. Because email is unique, we will guarantee that we will get only one row
 	row := db.DB.QueryRow(query, u.Email)
 
 	var retrievedPassword string
-	err := row.Scan(&retrievedPassword)
+	err := row.Scan(&u.ID, &retrievedPassword)
 
 	if err != nil {
 		return errors.New("invalid credentials")

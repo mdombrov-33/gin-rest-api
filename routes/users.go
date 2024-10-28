@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/mdombrov-33/ginrestapi/models"
+	"github.com/mdombrov-33/ginrestapi/utils"
 )
 
 func signup(context *gin.Context) {
@@ -56,10 +57,17 @@ func login(context *gin.Context) {
 	// Check if there was an error validating the user credentials
 
 	if err != nil {
-		context.JSON(http.StatusUnauthorized, gin.H{"message": "Invalid credentials"})
+		context.JSON(http.StatusUnauthorized, gin.H{"message": "Could not authenticate user"})
+		return
+	}
+
+	token, err := utils.GenerateToken(user.Email, user.ID)
+
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not generate token"})
 		return
 	}
 
 	// 200 status code, send back a JWT token
-	context.JSON(http.StatusOK, gin.H{"message": "Login successful!"})
+	context.JSON(http.StatusOK, gin.H{"message": "Login successful!", "token": token})
 }
