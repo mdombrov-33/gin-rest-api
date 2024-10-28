@@ -100,7 +100,6 @@ func GetEventById(id int64) (*Event, error) {
 	}
 
 	return &e, nil
-
 }
 
 func (e Event) Update() error {
@@ -125,7 +124,6 @@ func (e Event) Update() error {
 	_, err = sqlStatement.Exec(e.Title, e.Description, e.Location, e.DateTime, e.ID)
 
 	return err
-
 }
 
 func (e Event) Delete() error {
@@ -144,6 +142,26 @@ func (e Event) Delete() error {
 
 	// Insert values in the same order as the query above
 	_, err = sqlStatement.Exec(e.ID)
+
+	return err
+}
+
+func (e Event) Register(userId int64) error {
+	query := `INSERT INTO registrations (event_id, user_id) VALUES (?, ?)`
+
+	// Prepare the query to prevent SQL injection attacks and to improve performance(prepare is optional, but recommended)
+	sqlStatement, err := db.DB.Prepare(query)
+
+	// Check if there was an error preparing the query
+	if err != nil {
+		return err
+	}
+
+	// Close the statement connection when the function ends
+	defer sqlStatement.Close()
+
+	// Insert values in the same order as the query above
+	_, err = sqlStatement.Exec(e.ID, userId)
 
 	return err
 }
