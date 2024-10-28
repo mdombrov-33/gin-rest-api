@@ -1,0 +1,10 @@
+// Using the REST Client extension in VS Code to test the API
+// Should work without http:// part. Add it if there is an error when sending request
+POST http://localhost:8080/signup
+content-type: application/json
+
+{
+   "email": "gigaaboba@gmail.com",
+   "password": "abobamaster"
+}
+

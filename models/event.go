@@ -22,7 +22,7 @@ func (e Event) Save() error {
 	query := `INSERT INTO events (title, description, location, dateTime, user_id)
 	VALUES (?, ?, ?, ?, ?)` // protect against SQL injection, actual insert happens below
 
-	// Prepare the query to prevent SQL injection attacks and to improve performance(prepare is optional, but recommended)
+	// Prepare the query to prevent SQL injection attacks and to improve performance(prepare is optional, but recommended, can do just .Exec)
 	sqlStatement, err := db.DB.Prepare(query)
 	if err != nil {
 		return err
