@@ -7,7 +7,7 @@ import (
 )
 
 type Event struct {
-	//`binding:"required"` is a struct tag that tells Gin to check if the field is present in the JSON body
+	// `binding:"required"` is a struct tag that tells Gin to check if the field is present in the JSON body
 	ID          int64
 	Title       string    `binding:"required"`
 	Description string    `binding:"required"`
@@ -22,7 +22,7 @@ func (e Event) Save() error {
 	query := `INSERT INTO events (title, description, location, dateTime, user_id)
 	VALUES (?, ?, ?, ?, ?)` // protect against SQL injection, actual insert happens below
 
-	// Prepare the query to prevent SQL injection attacks and to improve performance
+	// Prepare the query to prevent SQL injection attacks and to improve performance(prepare is optional, but recommended)
 	sqlStatement, err := db.DB.Prepare(query)
 	if err != nil {
 		return err
@@ -40,6 +40,7 @@ func (e Event) Save() error {
 	// Get the ID of the inserted row, we can do that because we set the ID to AUTOINCREMENT
 	id, err := result.LastInsertId()
 
+	// Set the ID of the event to the ID of the inserted row
 	e.ID = id
 
 	return err
@@ -77,4 +78,25 @@ func GetAllEvents() ([]Event, error) {
 	}
 
 	return events, nil
+}
+
+func GetEventById(id int64) (*Event, error) {
+	// id = ? is to prevent SQL injection
+	// Question mark is a placeholder for the actual value
+	query := "SELECT * FROM events WHERE id = ?"
+
+	// QueryRow is used when we expect only one row back
+	// id is the actual value that will replace the question mark
+	row := db.DB.QueryRow(query, id)
+
+	var e Event
+
+	err := row.Scan(&e.ID, &e.Title, &e.Description, &e.Location, &e.DateTime, &e.UserID)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &e, nil
+
 }

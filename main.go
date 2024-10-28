@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 
@@ -10,7 +11,6 @@ import (
 )
 
 func main() {
-
 	// Initialize the database
 	db.InitDB()
 
@@ -19,6 +19,7 @@ func main() {
 
 	// Define the routes
 	server.GET("/events", getEvents)
+	server.GET("/events/:id", getEvent)
 	server.POST("/events", createEvent)
 
 	server.Run(":8080") // localhost:8080
@@ -36,6 +37,27 @@ func getEvents(context *gin.Context) {
 
 	// 200 status code, send back events as JSON(handled automatically by Gin)
 	context.JSON(http.StatusOK, events)
+}
+
+func getEvent(context *gin.Context) {
+	// Get the event ID from the URL. Name in parentheses should match the parameter(:id) in server.GET
+	// Use strconv to convert the string to an integer
+	eventId, err := strconv.ParseInt(context.Param("id"), 10, 64)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "Invalid event ID"})
+		return
+	}
+
+	// Get the event by ID
+	event, err := models.GetEventById(eventId)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not get event"})
+		return
+	}
+
+	// 200 status code, send back the event as JSON
+	context.JSON(http.StatusOK, event)
+
 }
 
 func createEvent(context *gin.Context) {
