@@ -28,7 +28,7 @@ func (e Event) Save() error {
 		return err
 	}
 
-	// Close the statement when the function ends
+	// Close the statement connection when the function ends
 	defer sqlStatement.Close()
 
 	// Insert values in the same order as the query above
@@ -46,6 +46,35 @@ func (e Event) Save() error {
 
 }
 
-func GetAllEvents() []Event {
-	return events
+func GetAllEvents() ([]Event, error) {
+	query := "SELECT * FROM events"
+
+	// Can also use db.DB.Exec
+	// .Query is used when we just want to get a lot of data back
+	// .Exec is used when we have more complex query that changes data in the database
+	rows, err := db.DB.Query(query)
+	if err != nil {
+		return nil, err
+	}
+
+	// Close the rows connection when the function ends
+	defer rows.Close()
+
+	var events []Event
+
+	// Loop through the rows
+	for rows.Next() {
+		var e Event
+
+		// Scan the row and place the values in the struct
+		err := rows.Scan(&e.ID, &e.Title, &e.Description, &e.Location, &e.DateTime, &e.UserID)
+		if err != nil {
+			return nil, err
+		}
+
+		// Append the event to the events slice
+		events = append(events, e)
+	}
+
+	return events, nil
 }

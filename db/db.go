@@ -14,7 +14,7 @@ func InitDB() {
 	var err error
 
 	// Open the database
-	DB, err = sql.Open("sqlite3", "api.db") // Driver name, path to the database file
+	DB, err = sql.Open("sqlite3", "api.db") // Driver name, path to the database file(will be created if it doesn't exist)
 
 	// Check if the database was opened correctly.
 	// Because of Gin, panic will not stop the server from running and will only print the message to the console
