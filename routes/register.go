@@ -35,7 +35,7 @@ func registerForEvent(context *gin.Context) {
 	}
 
 	// 200 status code, send back the message
-	context.JSON(http.StatusOK, gin.H{"message": "Successfully registered for the event"})
+	context.JSON(http.StatusCreated, gin.H{"message": "Successfully registered for the event"})
 }
 
 func cancelRegistrationForEvent(context *gin.Context) {
