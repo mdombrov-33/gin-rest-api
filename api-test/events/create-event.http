@@ -2,6 +2,8 @@
 // Should work without http:// part. Add it if there is an error when sending request
 POST http://localhost:8080/events
 content-type: application/json
+// place the token here
+# authorization:
 
 //Same format as Event struct, keys are case insensitive
 {
