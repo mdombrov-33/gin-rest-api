@@ -32,5 +32,5 @@ func signup(context *gin.Context) {
 	}
 
 	// 201 status code, send back a message and the created user as JSON
-	context.JSON(http.StatusCreated, gin.H{"message": "User Created!", "user": user})
+	context.JSON(http.StatusCreated, gin.H{"message": "User Created!", "userEmail": user.Email})
 }

@@ -1,6 +1,9 @@
 package models
 
-import "github.com/mdombrov-33/ginrestapi/db"
+import (
+	"github.com/mdombrov-33/ginrestapi/db"
+	"github.com/mdombrov-33/ginrestapi/utils"
+)
 
 type User struct {
 	ID       int64
@@ -20,8 +23,15 @@ func (u User) Save() error {
 	// Close the statement connection when the function ends
 	defer sqlStatement.Close()
 
+	// Hash the password before saving it to the database
+	hashedPassword, err := utils.HashPassword(u.Password)
+
+	if err != nil {
+		return err
+	}
+
 	// Insert values in the same order as the query above
-	result, err := sqlStatement.Exec(u.Email, u.Password)
+	result, err := sqlStatement.Exec(u.Email, hashedPassword)
 
 	if err != nil {
 		return err
