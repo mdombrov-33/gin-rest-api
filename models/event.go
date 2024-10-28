@@ -91,6 +91,7 @@ func GetEventById(id int64) (*Event, error) {
 
 	var e Event
 
+	// Scan the row and place the values in the struct
 	err := row.Scan(&e.ID, &e.Title, &e.Description, &e.Location, &e.DateTime, &e.UserID)
 
 	if err != nil {
