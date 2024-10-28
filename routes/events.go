@@ -101,4 +101,14 @@ func updateEvent(context *gin.Context) {
 		return
 	}
 
+	// Set the ID of the updated event to the ID from the URL
+	updatedEvent.ID = eventId
+	err = updatedEvent.Update()
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not update event"})
+		return
+	}
+
+	// 200 status code, send back a message and the updated event as JSON
+	context.JSON(http.StatusOK, gin.H{"message": "Event updated!", "event": updatedEvent})
 }

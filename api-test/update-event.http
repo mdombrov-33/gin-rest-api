@@ -1,0 +1,12 @@
+// Using the REST Client extension in VS Code to test the API
+// Should work without http:// part. Add it if there is an error when sending request
+PUT http://localhost:8080/events/1
+content-type: application/json
+
+{
+    "title": "Updated Event123",
+    "description": "Updated Description",
+    "location": "Updated Location",
+    "dateTime": "2065-12-31T23:59:59Z"
+}
+
