@@ -1,6 +1,8 @@
 package models
 
 import (
+	"errors"
+
 	"github.com/mdombrov-33/ginrestapi/db"
 	"github.com/mdombrov-33/ginrestapi/utils"
 )
@@ -43,4 +45,31 @@ func (u User) Save() error {
 	// Set the ID of the user to the ID of the inserted row
 	u.ID = userId
 	return err
+}
+
+func (u User) ValidateCredentials() error {
+	query := "SELECT password FROM users WHERE email = ?"
+
+	// QueryRow returns a single row from the database. Because email is unique, we will guarantee that we will get only one row
+	row := db.DB.QueryRow(query, u.Email)
+
+	var retrievedPassword string
+	err := row.Scan(&retrievedPassword)
+
+	if err != nil {
+		return errors.New("invalid credentials")
+	}
+
+	// Compare the password from the database with the password from the user request
+	passwordIsValid, err := utils.VerifyPassword(u.Password, retrievedPassword)
+
+	if err != nil {
+		return err
+	}
+
+	if !passwordIsValid {
+		return errors.New("invalid credentials")
+	}
+
+	return nil
 }
