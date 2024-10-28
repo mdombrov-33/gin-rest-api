@@ -3,13 +3,12 @@
 // Should have empty space between payload and the request
 POST http://localhost:8080/events
 content-type: application/json
-
 // place the token here after login
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIxQGdtYWlsLmNvbSIsImV4cCI6MTczMDE1NjI1NSwidXNlcklkIjoxfQ.Ng5RptVGnu03aJsvQe3od-ZZGTKnBlqmu-tIdV_EA9o
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIzQGdtYWlsLmNvbSIsImV4cCI6MTczMDE1NzQ5NiwidXNlcklkIjozfQ.UHCVM5xR7qDAhgS96EAPwSIPa4dNpcmvdubUyaBBjNE
 
 //Same format as Event struct, keys are case insensitive
 {
-  "title": "Test Event user1",
+  "title": "Test Event user666",
   "description": "Token event",
   "location": "Test Location",
   "dateTime": "2025-12-31T23:59:59Z"

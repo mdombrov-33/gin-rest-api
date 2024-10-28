@@ -3,7 +3,6 @@
 // Should have empty space between payload and the request
 PUT http://localhost:8080/events/2
 content-type: application/json
-
 // place the token here after login
 authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIyQGdtYWlsLmNvbSIsImV4cCI6MTczMDE1NDc3MCwidXNlcklkIjoyfQ.aUAAFWn-4m2t_5yP2Hf4llKeOrxiDU94K4PvRHDOJEw
 

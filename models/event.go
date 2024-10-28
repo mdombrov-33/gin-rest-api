@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"time"
 
 	"github.com/mdombrov-33/ginrestapi/db"
@@ -162,6 +163,36 @@ func (e Event) Register(userId int64) error {
 
 	// Insert values in the same order as the query above
 	_, err = sqlStatement.Exec(e.ID, userId)
+
+	return err
+}
+
+func (e Event) CancelRegistration(userId int64) error {
+	query := `DELETE FROM registrations WHERE event_id = ? AND user_id = ?`
+
+	// Prepare the query to prevent SQL injection attacks and to improve performance(prepare is optional, but recommended)
+	sqlStatement, err := db.DB.Prepare(query)
+
+	// Check if there was an error preparing the query
+	if err != nil {
+		return err
+	}
+
+	// Close the statement connection when the function ends
+	defer sqlStatement.Close()
+
+	// Insert values in the same order as the query above
+	row, err := sqlStatement.Exec(e.ID, userId)
+	if err != nil {
+		return err
+	}
+
+	// Check if the registration was successful
+	r, err := row.RowsAffected()
+	if r == 0 {
+
+		return errors.New("no registration found")
+	}
 
 	return err
 }
