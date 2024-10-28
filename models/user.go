@@ -49,7 +49,8 @@ func (u User) Save() error {
 	return err
 }
 
-func (u User) ValidateCredentials() error {
+func (u *User) ValidateCredentials() error { // pointer receiver because we want to modify the user struct, without pointer we'll get 0 for ID when creating
+
 	query := "SELECT id, password FROM users WHERE email = ?"
 
 	// QueryRow returns a single row from the database. Because email is unique, we will guarantee that we will get only one row

@@ -54,7 +54,7 @@ func createEvent(context *gin.Context) {
 	}
 
 	// Check if the token is valid
-	err := utils.VerifyToken(token)
+	userId, err := utils.VerifyToken(token)
 
 	// If the token is not valid, return an error
 	if err != nil {
@@ -77,7 +77,7 @@ func createEvent(context *gin.Context) {
 		return
 	}
 
-	event.UserID = 1
+	event.UserID = userId
 
 	// Save the event
 	err = event.Save()

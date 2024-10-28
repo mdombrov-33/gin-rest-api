@@ -13,12 +13,12 @@ type Event struct {
 	Description string    `binding:"required"`
 	Location    string    `binding:"required"`
 	DateTime    time.Time `binding:"required"`
-	UserID      int
+	UserID      int64
 }
 
 var events = []Event{}
 
-func (e Event) Save() error {
+func (e *Event) Save() error { // pointer receiver because we want to modify the event struct, without pointer we'll get 0 for ID when creating
 	query := `INSERT INTO events (title, description, location, dateTime, user_id)
 	VALUES (?, ?, ?, ?, ?)` // protect against SQL injection, actual insert happens below
 

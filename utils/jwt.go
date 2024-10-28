@@ -22,7 +22,7 @@ func GenerateToken(email string, userId int64) (string, error) {
 	return token.SignedString([]byte(secretKey))
 }
 
-func VerifyToken(token string) error {
+func VerifyToken(token string) (int64, error) {
 	parsedToken, err := jwt.Parse(token, func(token *jwt.Token) (interface{}, error) {
 
 		//Check if token was signed with the correct secret key
@@ -30,7 +30,7 @@ func VerifyToken(token string) error {
 
 		// If the signing method is not what we expect, return an error
 		if !ok {
-			return nil, errors.New("Unexpected signing method")
+			return nil, errors.New("unexpected signing method")
 		}
 
 		return []byte(secretKey), nil
@@ -38,7 +38,7 @@ func VerifyToken(token string) error {
 
 	// Check if there was an error parsing the token
 	if err != nil {
-		return errors.New("Could not parse token")
+		return 0, errors.New("could not parse token")
 	}
 
 	// Check if the token is valid(signed with the correct secret key)
@@ -46,19 +46,18 @@ func VerifyToken(token string) error {
 
 	// If the token is not valid, return an error
 	if !tokenIsValid {
-		return errors.New("Token is not valid")
+		return 0, errors.New("token is not valid")
 	}
 
 	// Get the token claims
-	// claims, ok := parsedToken.Claims.(jwt.MapClaims)
+	claims, ok := parsedToken.Claims.(jwt.MapClaims)
 
 	// Check if the token claims are valid
-	// if !ok {
-	// 	return errors.New("Invalid token claims")
-	// }
+	if !ok {
+		return 0, errors.New("invalid token claims")
+	}
 
-	// Get the email and userId from the token claims, check their types
-	// email := claims["email"].(string)
-	// userId := claims["userId"].(int64)
-	return nil
+	// Get the userId from the token claims
+	userId := int64(claims["userId"].(float64)) // float64 because that's what the claims are stored as
+	return userId, nil                          // convert to int64 manually, if we use int64 instead of float64 we'll get an error when using protected routes
 }

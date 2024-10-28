@@ -3,12 +3,12 @@
 POST http://localhost:8080/events
 content-type: application/json
 // place the token here
-# authorization:
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIyQGdtYWlsLmNvbSIsImV4cCI6MTczMDE1Mjc2NCwidXNlcklkIjoyfQ.1TfNe1fqrMA4WtTeh-o94awIpUIrhZCnwMNHStt0jEc
 
 //Same format as Event struct, keys are case insensitive
 {
-  "title": "Test Event",
-  "description": "This is a test event",
+  "title": "Test Event user1",
+  "description": "Token event",
   "location": "Test Location",
   "dateTime": "2025-12-31T23:59:59Z"
 }
