@@ -94,6 +94,7 @@ func GetEventById(id int64) (*Event, error) {
 	// Scan the row and place the values in the struct
 	err := row.Scan(&e.ID, &e.Title, &e.Description, &e.Location, &e.DateTime, &e.UserID)
 
+	// Check if there was an error getting the event from the database
 	if err != nil {
 		return nil, err
 	}
@@ -112,6 +113,7 @@ func (e Event) Update() error {
 	// Prepare the query to prevent SQL injection attacks and to improve performance(prepare is optional, but recommended)
 	sqlStatement, err := db.DB.Prepare(query)
 
+	// Check if there was an error preparing the query
 	if err != nil {
 		return err
 	}
@@ -121,6 +123,7 @@ func (e Event) Update() error {
 
 	// Insert values in the same order as the query above
 	_, err = sqlStatement.Exec(e.Title, e.Description, e.Location, e.DateTime, e.ID)
+
 	return err
 
 }
@@ -131,6 +134,7 @@ func (e Event) Delete() error {
 	// Prepare the query to prevent SQL injection attacks and to improve performance(prepare is optional, but recommended)
 	sqlStatement, err := db.DB.Prepare(query)
 
+	// Check if there was an error preparing the query
 	if err != nil {
 		return err
 	}
@@ -140,5 +144,6 @@ func (e Event) Delete() error {
 
 	// Insert values in the same order as the query above
 	_, err = sqlStatement.Exec(e.ID)
+
 	return err
 }

@@ -28,6 +28,7 @@ func (u User) Save() error {
 	// Hash the password before saving it to the database
 	hashedPassword, err := utils.HashPassword(u.Password)
 
+	// Check if there was an error hashing the password
 	if err != nil {
 		return err
 	}
@@ -35,6 +36,7 @@ func (u User) Save() error {
 	// Insert values in the same order as the query above
 	result, err := sqlStatement.Exec(u.Email, hashedPassword)
 
+	// Check if there was an error inserting the values
 	if err != nil {
 		return err
 	}
@@ -53,9 +55,13 @@ func (u User) ValidateCredentials() error {
 	// QueryRow returns a single row from the database. Because email is unique, we will guarantee that we will get only one row
 	row := db.DB.QueryRow(query, u.Email)
 
+	// Create a variable to store the password from the database
 	var retrievedPassword string
+
+	// Scan the row and store the values in the variables
 	err := row.Scan(&u.ID, &retrievedPassword)
 
+	// Check if there was an error getting the user from the database
 	if err != nil {
 		return errors.New("invalid credentials")
 	}
@@ -63,10 +69,12 @@ func (u User) ValidateCredentials() error {
 	// Compare the password from the database with the password from the user request
 	passwordIsValid, err := utils.VerifyPassword(u.Password, retrievedPassword)
 
+	// Check if there was an error comparing the passwords
 	if err != nil {
 		return err
 	}
 
+	// If the password is not valid, return an error
 	if !passwordIsValid {
 		return errors.New("invalid credentials")
 	}

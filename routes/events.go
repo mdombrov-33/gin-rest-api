@@ -45,7 +45,6 @@ func getEvent(context *gin.Context) {
 }
 
 func createEvent(context *gin.Context) {
-
 	// Get the token from the Authorization header
 	token := context.Request.Header.Get("Authorization")
 
@@ -103,6 +102,7 @@ func updateEvent(context *gin.Context) {
 		return
 	}
 
+	// Check if the event exists
 	_, err = models.GetEventById(eventId)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not get an event"})
