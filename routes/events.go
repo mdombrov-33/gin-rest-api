@@ -6,7 +6,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/mdombrov-33/ginrestapi/models"
-	"github.com/mdombrov-33/ginrestapi/utils"
 )
 
 func getEvents(context *gin.Context) {
@@ -45,22 +44,6 @@ func getEvent(context *gin.Context) {
 }
 
 func createEvent(context *gin.Context) {
-	// Get the token from the Authorization header
-	token := context.Request.Header.Get("Authorization")
-
-	// Check if on empty token if client did not send a token
-	if token == "" {
-		context.JSON(http.StatusUnauthorized, gin.H{"message": "Token is required"})
-	}
-
-	// Check if the token is valid
-	userId, err := utils.VerifyToken(token)
-
-	// If the token is not valid, return an error
-	if err != nil {
-		context.JSON(http.StatusUnauthorized, gin.H{"message": "Token is not valid"})
-		return
-	}
 
 	// Create a new event
 	var event models.Event
@@ -69,7 +52,7 @@ func createEvent(context *gin.Context) {
 	// Gin will automatically parse the JSON body and bind it to the event struct
 	// Client should send a JSON object with the same fields as the event struct
 	// If not, Gin will automatically set the missing fields to their zero values
-	err = context.ShouldBindJSON(&event)
+	err := context.ShouldBindJSON(&event)
 
 	// Check if the JSON body was parsed correctly
 	if err != nil {
@@ -77,6 +60,8 @@ func createEvent(context *gin.Context) {
 		return
 	}
 
+	// Get the userId from the Gin context
+	userId := context.GetInt64("userId")
 	event.UserID = userId
 
 	// Save the event

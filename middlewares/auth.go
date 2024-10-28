@@ -27,6 +27,9 @@ func Authenticate(context *gin.Context) {
 		return
 	}
 
+	// Set the userId to be available in the Gin context(will pass later to the route handlers)
+	context.Set("userId", userId)
+
 	// Make sure that next event handler in line will be executed correctly
 	context.Next()
 
