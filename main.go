@@ -33,7 +33,7 @@ func createEvent(context *gin.Context) {
 
 	// Bind the JSON body to the event struct
 	// Gin will automatically parse the JSON body and bind it to the event struct
-	// Client should send a JSON object with the same fields as the event struct,
+	// Client should send a JSON object with the same fields as the event struct
 	// If not, Gin will automatically set the missing fields to their zero values
 	err := context.ShouldBindJSON(&event)
 
@@ -43,11 +43,14 @@ func createEvent(context *gin.Context) {
 		return
 	}
 
+	// Dummy ID and UserID
 	event.ID = 1
 	event.UserID = 1
 
+	// Save the event
 	event.Save()
 
+	// 201 status code, send back a message and the created event as JSON
 	context.JSON(http.StatusCreated, gin.H{"message": "Event Created!", "event": event})
 
 }
