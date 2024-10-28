@@ -2,13 +2,15 @@ package db
 
 import (
 	"database/sql"
+	"log"
 
+	// go get github.com/mattn/go-sqlite3
 	_ "github.com/mattn/go-sqlite3"
 )
 
 var DB *sql.DB
 
-func InitDb() {
+func InitDB() {
 	var err error
 
 	// Open the database
@@ -25,4 +27,29 @@ func InitDb() {
 
 	// Number of idle connections when the database is not used by anyone
 	DB.SetMaxIdleConns(5)
+
+	// Create the tables
+	createTables()
+}
+
+func createTables() {
+	createEventsTable := `
+	CREATE TABLE IF NOT EXISTS events(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	title TEXT NOT NULL,
+	description TEXT NOT NULL,
+	location TEXT NOT NULL,
+	dateTime DATETIME NOT NULL,
+	user_id INTEGER
+	)`
+
+	// Execute the query
+	_, err := DB.Exec(createEventsTable)
+
+	// Check if the table was created correctly
+	if err != nil {
+		// panic("Could not create events table")
+		log.Fatalf("Could not create events table: %v", err)
+	}
+
 }
