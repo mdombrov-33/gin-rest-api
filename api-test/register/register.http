@@ -2,5 +2,7 @@
 // Should work without http:// part. Add it if there is an error when sending request
 POST http://localhost:8080/events/1/register
 content-type: application/json
+
+// place the token here after login
 authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIxQGdtYWlsLmNvbSIsImV4cCI6MTczMDE1NjI1NSwidXNlcklkIjoxfQ.Ng5RptVGnu03aJsvQe3od-ZZGTKnBlqmu-tIdV_EA9o
 
