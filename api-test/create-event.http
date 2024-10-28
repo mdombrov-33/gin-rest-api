@@ -1,5 +1,5 @@
 // Using the REST Client extension in VS Code to test the API
-// Shouldn't work without http:// part. Add it if there is an error when sending request
+// Should work without http:// part. Add it if there is an error when sending request
 POST http://localhost:8080/events
 content-type: application/json
 
