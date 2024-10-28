@@ -44,6 +44,17 @@ func getEvent(context *gin.Context) {
 }
 
 func createEvent(context *gin.Context) {
+
+	// Get the token from the Authorization header
+	token := context.Request.Header.Get("Authorization")
+
+	// Check if on empty token if client did not send a token
+	if token == "" {
+		context.JSON(http.StatusUnauthorized, gin.H{"message": "Not authorized"})
+	}
+
+	// Check if the token is valid
+
 	// Create a new event
 	var event models.Event
 
@@ -59,9 +70,8 @@ func createEvent(context *gin.Context) {
 		return
 	}
 
-	// Dummy ID and UserID
-	// event.ID = 1
-	// event.UserID = 1
+	event.ID = 1
+	event.UserID = 1
 
 	// Save the event
 	err = event.Save()
