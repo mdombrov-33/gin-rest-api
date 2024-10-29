@@ -238,7 +238,7 @@ Request body:
 authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3R1c2VyQGdtYWlsLmNvbSIsImV4cCI6MTczMDE4NjYzMSwidXNlcklkIjo1fQ.aEZHPT_HdpHf6S3I-oIkgfHLYHUYFrBvXFlQQDaMMVA
  ```
 
-Response:
+Response: 200 OK
 ```sh
 {
 "message": "Successfully canceled registration"
