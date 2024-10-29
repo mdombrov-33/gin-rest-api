@@ -34,28 +34,28 @@ This project is a REST API built with the Gin framework in Go. It provides user 
 
 1. Clone the repository:
 
-   ```sh
-   git clone https://github.com/mdombrov-33/gin-rest-api.git
-   cd gin-rest-api
-   ```
+```sh
+git clone https://github.com/mdombrov-33/gin-rest-api.git
+cd gin-rest-api
+```
 
  2. Install dependencies:
     
-    ```sh
-    go mod tidy
-    ```
+```sh
+go mod tidy
+```
   
 3. Build the application:
 
-    ```sh
-    go build -o gin-rest-api
-    ```
+```sh
+go build -o gin-rest-api
+```
 
 4. Run the application:
 
-   ```sh
-   ./gin-rest-api
-   ```
+```sh
+./gin-rest-api
+```
 
   ## API Endpoints
   
@@ -76,5 +76,57 @@ Response: 201 Created
 ```sh
 {
   "message": "User Created!"
+}
+```
+
+- **Login: POST /login**:
+
+Request body:
+
+```sh
+{
+   "email": "testuser@gmail.com",
+   "password": "test"
+}
+```
+
+Response: 200 OK
+
+```sh
+{
+  "message": "Login successful!",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3R1c2VyQGdtYWlsLmNvbSIsImV4cCI6MTczMDE4NjYzMSwidXNlcklkIjo1fQ.aEZHPT_HdpHf6S3I-oIkgfHLYHUYFrBvXFlQQDaMMVA"
+}
+```
+
+### Event Management
+
+- **Create Event: POST /events**
+
+Request body:
+```sh
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3R1c2VyQGdtYWlsLmNvbSIsImV4cCI6MTczMDE4NjYzMSwidXNlcklkIjo1fQ.aEZHPT_HdpHf6S3I-oIkgfHLYHUYFrBvXFlQQDaMMVA
+
+{
+"title": "Event Title",
+"description": "Event Description",
+"location": "Event Location",
+"dateTime": "2025-12-31T23:59:59Z"
+}
+```
+
+Response: 201 Created
+
+```sh
+{
+"event": {
+"ID": 1,
+"Title": "Event Title",
+"Description": "Event Description",
+"Location": "Event Location",
+"DateTime": "2025-12-31T23:59:59Z",
+"UserID": 1
+},
+"message": "Event Created!"
 }
 ```
