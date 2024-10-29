@@ -103,7 +103,7 @@ func GetEventById(id int64) (*Event, error) {
 	return &e, nil
 }
 
-func (e Event) Update() error {
+func (e *Event) Update() error {
 	query := `
 	UPDATE events
 	SET title = ?, description = ?, location = ?, dateTime = ?

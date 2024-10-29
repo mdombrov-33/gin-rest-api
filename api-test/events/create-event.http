@@ -4,12 +4,12 @@
 POST http://localhost:8080/events
 content-type: application/json
 // place the token here after login
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIzQGdtYWlsLmNvbSIsImV4cCI6MTczMDE1NzQ5NiwidXNlcklkIjozfQ.UHCVM5xR7qDAhgS96EAPwSIPa4dNpcmvdubUyaBBjNE
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3R1c2VyMkBnbWFpbC5jb20iLCJleHAiOjE3MzAxODg2MTAsInVzZXJJZCI6Mn0.cHl8o6zRgchAxfHPCWTh70_mIMumH2jjB6soZLZCIEA
 
 //Same format as Event struct, keys are case insensitive
 {
-  "title": "Test Event user666",
-  "description": "Token event",
-  "location": "Test Location",
+  "title": "Event Title2",
+  "description": "Event Description",
+  "location": "Event Location",
   "dateTime": "2025-12-31T23:59:59Z"
 }

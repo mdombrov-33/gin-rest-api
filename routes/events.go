@@ -103,6 +103,8 @@ func updateEvent(context *gin.Context) {
 
 	var updatedEvent models.Event
 
+	updatedEvent.UserID = userId
+
 	// Bind the JSON body to the updatedEvent struct
 	err = context.ShouldBindJSON(&updatedEvent)
 	if err != nil {
